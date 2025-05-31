@@ -6,6 +6,11 @@ import pickle
 import time, sys, traceback
 import re
 
+try:
+    from urllib.parse import urlparse
+except ImportError:  # Python 2 fallback
+    from urlparse import urlparse
+
 import six
 from lxml import etree
 
@@ -31,9 +36,6 @@ from scrapy.selector import Selector
 from pol.log import LogHandler
 from .feed import Feed
 from .client import ppReadBody, IGNORE_SIZE
-
-from twisted.logger import Logger
-
 
 log = Logger()
 
