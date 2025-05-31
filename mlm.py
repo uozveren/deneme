@@ -103,7 +103,7 @@ def pgc(none): # periodical_garbage_collect
         log.info('GC: COLLECTED: %s' % gc.collect())
         go, allo = get_gc_stats()
         log.info("GC: GARBAGE OBJECTS STATS (%s)" % len(go))
-        for tpe, stats in sorted(go.iteritems(), key=lambda t: t[0]):
+        for tpe, stats in sorted(iter(go.items()), key=lambda t: t[0]):
             log.info("GC: %s: %s, %s" % (tpe, stats.count. stats.size))
 
         log.info("GC: ALL OBJECTS STATS (%s)" % len(allo))
@@ -114,7 +114,7 @@ def pgc(none): # periodical_garbage_collect
         size = 0
         cur_ids = []
         cur_values = []
-        for tpe, stats in sorted(allo.iteritems(), key=lambda t: t[0]):
+        for tpe, stats in sorted(iter(allo.items()), key=lambda t: t[0]):
             scount = stats.count
             ssize = stats.size
             objects = stats.objects

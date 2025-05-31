@@ -87,7 +87,7 @@ class Feed(object):
 
     def _build_link(self, html, doc_url, url):
         base_url = w3lib.html.get_base_url(html, doc_url)
-        return w3lib.url.urljoin_rfc(base_url, url).decode('utf-8')
+        return w3lib.url.urljoin_rfc(base_url, url)
 
     def buildFeed(self, selector, page_unicode, feed_config):
         selector.remove_namespaces()
@@ -107,7 +107,7 @@ class Feed(object):
 
                     extracted = node.xpath(feed_config['fields'][field_name]).extract()
                     if extracted:
-                        item[field_name] = u''.join(extracted)
+                        item[field_name] = ''.join(extracted)
                         if feed_config['required'][field_name]:
                             required_found += 1
                         if field_name == 'link':
@@ -162,10 +162,10 @@ class Feed(object):
                 if not feed:
                     feed['id'] = feed_id
                     feed['uri'] = row['uri']
-                    feed['xpath'] = row['feed_xpath'].decode('utf-8')
+                    feed['xpath'] = row['feed_xpath']
                     feed['fields'] = {}
                     feed['required'] = {}
-                feed['fields'][row['name']] = row['xpath'].decode('utf-8')
+                feed['fields'][row['name']] = row['xpath']
                 feed['required'][row['name']] = row['required']
 
         if feed:

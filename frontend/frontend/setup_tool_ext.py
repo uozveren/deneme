@@ -32,7 +32,7 @@ def build_xpath_results(selectors, file_name):
             for elem in post_elems:
                 selected_required = True
                 extracted_post = {}
-                for field_id, xpath_required in field_xpathes.iteritems():
+                for field_id, xpath_required in field_xpathes.items():
                     xpath, required = xpath_required
                     if not (field_id in field_results):
                         field_results[field_id] = {}
@@ -41,18 +41,18 @@ def build_xpath_results(selectors, file_name):
                         extracts = elem.xpath(xpath).extract()
                         if not required:
                             if extracts:
-                                extracted_post[field_id] = u''.join(extracts)
+                                extracted_post[field_id] = ''.join(extracts)
                         else:
                             if not extracts:
                                 selected_required = False
                             else:
-                                extracted_post[field_id] = u''.join(extracts)
+                                extracted_post[field_id] = ''.join(extracts)
                     except ValueError as ex:
                         success = False
                         field_results[field_id]['error'] = ex.message
 
                 if selected_required:
-                    for field_id, xpath_required in field_xpathes.iteritems():
+                    for field_id, xpath_required in field_xpathes.items():
                         xpath, required = xpath_required
                         if not required:
                             if field_id in extracted_post:
@@ -68,7 +68,7 @@ def build_xpath_results(selectors, file_name):
 
                     extracted_posts.append(extracted_post)
             else:
-                for field_id, xpath_required in field_xpathes.iteritems():
+                for field_id, xpath_required in field_xpathes.items():
                     xpath, required = xpath_required
                     xpath = xpath.strip()
                     try:

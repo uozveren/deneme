@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 I_TAGNAME = 0
 I_ATTRS = 1
 I_CHILDREN = 2
@@ -8,7 +8,7 @@ def build_xpathes(item_tag_ids, html_json):
     shared_tag_stack = [];
 
 def _get_fork_stack(stacks):
-    first = stacks.itervalues().next() # just first stack
+    first = next(iter(stacks.values())) # just first stack
     for i in range(0, len(first)):
         tag = first[i]
         for name in stacks:

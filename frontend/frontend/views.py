@@ -1,4 +1,4 @@
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import json
 import re
 
@@ -26,10 +26,10 @@ def index(request):
                 if not url.startswith('http'):
                     url = 'http://' + url
                 val(url)
-            except ValidationError, e:
+            except ValidationError as e:
                 form.add_error('url', 'Invalid url')
             else:
-                return HttpResponseRedirect('%s?url=%s' % (reverse('setup'), urllib.quote(url.encode('utf8'))))
+                return HttpResponseRedirect('%s?url=%s' % (reverse('setup'), urllib.parse.quote(url.encode('utf8'))))
     else:
         form = IndexForm()
 
@@ -41,7 +41,7 @@ def contact(request):
 @ensure_csrf_cookie
 def setup(request):
     if request.method == 'GET' and 'url' in request.GET:
-        external_page_url = DOWNLOADER_PAGE_URL + urllib.quote(request.GET['url'], safe='')
+        external_page_url = DOWNLOADER_PAGE_URL + urllib.parse.quote(request.GET['url'], safe='')
         return render(request, 'frontend/setup.html',
                         {
                             'external_page_url': external_page_url,
@@ -53,7 +53,7 @@ def setup(request):
 def _validate_html(html):
 
     def walk(tag):
-        if (len(tag) != 3 or not isinstance(tag[0], basestring) or
+        if (len(tag) != 3 or not isinstance(tag[0], str) or
                 type(tag[1]) is not dict or 'tag-id' not in tag[1] or
                 type(tag[2]) is not list):
             return False
@@ -149,12 +149,12 @@ def _validate_selectors(selectors):
     feed_xpath = selectors[0]
     item_xpathes = selectors[1]
 
-    if not isinstance(feed_xpath, basestring):
+    if not isinstance(feed_xpath, str):
         return False
     if not isinstance(item_xpathes, dict):
         return False
 
-    item_xpathes = {int(field_id): xpath for field_id, xpath in item_xpathes.iteritems()}
+    item_xpathes = {int(field_id): xpath for field_id, xpath in item_xpathes.items()}
 
     fields = Field.objects.all()
 
@@ -162,7 +162,7 @@ def _validate_selectors(selectors):
 
     for field in fields:
         if field.id in item_xpathes:
-            if not isinstance(item_xpathes[field.id], basestring):
+            if not isinstance(item_xpathes[field.id], str):
                 return False
             else:
                 item_xpathes_out[field.id] = [item_xpathes[field.id], field.required]

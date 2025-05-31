@@ -15,8 +15,9 @@ sed -i -e 's/listen\ 80/listen\ '${WEB_PORT}'/g' \
 
 service nginx start > /dev/null
 
-/usr/bin/python ./frontend/manage.py migrate 
-/usr/bin/python ./frontend/manage.py loaddata fields.json 
 
-/usr/bin/python ./downloader.py &
-/usr/bin/python ./frontend/manage.py runserver
+/usr/bin/python3 ./frontend/manage.py migrate
+/usr/bin/python3 ./frontend/manage.py loaddata fields.json
+
+/usr/bin/python3 ./downloader.py &
+/usr/bin/python3 ./frontend/manage.py runserver
