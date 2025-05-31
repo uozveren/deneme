@@ -1,4 +1,4 @@
-from __future__ import print_function
+
 from datetime import datetime
 from hashlib import md5
 import json
@@ -9,9 +9,8 @@ import re
 try:
     from urllib.parse import urlparse
 except ImportError:  # Python 2 fallback
-    from urlparse import urlparse
+    from urllib.parse import urlparse
 
-import six
 from lxml import etree
 
 from twisted.web import server, resource
@@ -58,32 +57,21 @@ class Downloader(object):
     def html2json(self, el):
         return [
             el.tag,
-            {k: v for (k,v) in el.items() if k in ['tag-id', 'class']},  # attributes
+            {k: v for (k,v) in list(el.items()) if k in ['tag-id', 'class']},  # attributes
             [self.html2json(e) for e in el.getchildren() if isinstance(e, etree.ElementBase)]
         ]
 
     def _saveResponse(self, headers, url, tree):
         # save html for extended selectors
-        if six.PY2:
-            file_name = '%s_%s' % (time.time(), md5(url).hexdigest())
-        elif six.PY3:
-            file_name = '%s_%s' % (time.time(), md5(url.encode('utf-8')).hexdigest())
+        file_name = '%s_%s' % (time.time(), md5(url.encode('utf-8')).hexdigest())
         file_path = self.snapshot_dir + '/' + file_name
         with open(file_path, 'w') as f:
             f.write(url + '\n')
-            if six.PY2:
-                for k, v in headers.iteritems():
-                    for vv in v:
-                        f.write('%s: %s\n' % (k, vv))
-            elif six.PY3:
-                for k, v in headers.items():
-                    for vv in v:
-                        f.write('%s: %s\n' % (k, vv))
+            for k, v in headers.items():
+                for vv in v:
+                    f.write('%s: %s\n' % (k, vv))
 
-            if six.PY2:
-                f.write('\n\n' + etree.tostring(tree, encoding='utf-8', method='html'))
-            elif six.PY3:
-                f.write('\n\n' + etree.tostring(tree, encoding='utf-8', method='html').decode('utf-8'))
+            f.write('\n\n' + etree.tostring(tree, encoding='utf-8', method='html').decode('utf-8'))
         return file_name
 
     def sanitizeAndNumerate(self, selector, numerate=True, sanitize_anchors=True):
@@ -138,10 +126,7 @@ class Downloader(object):
             else:
                 base = etree.Element("base")
                 head.insert(0, base)
-            if six.PY2:
-                base.set('href', url.decode('utf-8'))
-            elif six.PY3:
-                base.set('href', url)
+            base.set('href', url)
 
         self.sanitizeAndNumerate(selector)
 
@@ -156,10 +141,7 @@ class Downloader(object):
                         ))
             body[0].append(script)
 
-        if six.PY2:
-            return etree.tostring(tree, method='html')
-        elif six.PY3:
-            return etree.tostring(tree, method='html').decode('utf-8')
+        return etree.tostring(tree, method='html').decode('utf-8')
 
     def buildScrapyResponse(self, response, body, url):
         status = response.code
@@ -249,7 +231,7 @@ class Downloader(object):
         else: # images and such
             response_str = sresponse.body
 
-        for k, v in response_headers.items():
+        for k, v in list(response_headers.items()):
             self.request.setHeader(k, v)
 
         self.request.write(response_str)
@@ -367,7 +349,7 @@ class Site(resource.Resource):
             else:
                 res = self.feed.getFeedData(feed_id)
 
-                if isinstance(res, basestring): # error message
+                if isinstance(res, str): # error message
                     return res
 
                 url, feed_config = res
