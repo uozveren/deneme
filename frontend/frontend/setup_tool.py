@@ -1,3 +1,4 @@
+from __future__ import print_function
 I_TAGNAME = 0
 I_ATTRS = 1
 I_CHILDREN = 2
@@ -105,13 +106,13 @@ def get_selection_tag_ids(item_tag_ids, html_json):
     # get fork path
     fork_path = [tag[I_TAGNAME] for tag in fork_stack]
     # console log
-    print 'Fork path: /'+'/'.join(fork_path)
+    print('Fork path: /' + '/'.join(fork_path))
     # get pathes for items
     fork_len = len(fork_path) - 1
     selection_pathes = {name:_build_path(parent_stacks[name][fork_len:]) for name in parent_stacks}
     # console log
     for name in selection_pathes:
-        print name + ': ' + '/'.join([repr(p) for p in selection_pathes[name]])
+        print(name + ': ' + '/'.join([repr(p) for p in selection_pathes[name]]))
     # get fork tags
     fork_tags = _find_tags_by_tag_names(html_json, fork_path)
 
