@@ -6,4 +6,5 @@ def main():
     ts.test_log_handler()
     ts.test_server()
 
-main()
+if __name__ == '__main__':
+    main()
