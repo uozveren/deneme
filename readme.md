@@ -96,6 +96,11 @@ python3 manage.py runserver
 popd
 ```
 
+### JSON feed output
+
+Feed URLs accept an optional `format` query parameter. Use `?format=json` to
+get feed items serialized as JSON instead of the default RSS XML.
+
 # Installation of Docker
 
 ## Build

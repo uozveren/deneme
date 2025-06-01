@@ -41,7 +41,8 @@ log = Logger()
 class Downloader(object):
 
     def __init__(self, feed, debug, snapshot_dir, stat_tool, memon, request,
-                 url, feed_config, selector_defer, sanitize, max_size):
+                 url, feed_config, selector_defer, sanitize, max_size,
+                 response_format='xml'):
         self.feed = feed
         self.debug = debug
         self.snapshot_dir = snapshot_dir
@@ -53,6 +54,7 @@ class Downloader(object):
         self.selector_defer = selector_defer
         self.sanitize = sanitize
         self.max_size = max_size
+        self.response_format = response_format
 
     def html2json(self, el):
         return [
@@ -227,7 +229,10 @@ class Downloader(object):
             ip = self.request.getHeader('x-real-ip') or self.request.client.host
             response_str = self.prepare_response_str(sresponse.selector, sresponse.headers, sresponse.body_as_unicode(), sresponse.url, ip)
             if self.feed_config:
-                response_headers = {b"Content-Type": b'text/xml; charset=utf-8'}
+                if self.response_format == 'json':
+                    response_headers = {b"Content-Type": b'application/json; charset=utf-8'}
+                else:
+                    response_headers = {b"Content-Type": b'text/xml; charset=utf-8'}
         else: # images and such
             response_str = sresponse.body
 
@@ -245,6 +250,15 @@ class Downloader(object):
             if self.sanitize:
                 self.sanitizeAndNumerate(selector, numerate=False, sanitize_anchors=False)
             [response_str, post_cnt, new_post_cnt] = self.feed.buildFeed(selector, page_unicode, self.feed_config)
+            if self.response_format == 'json':
+                items = []
+                root = etree.fromstring(response_str)
+                for item_el in root.xpath('//item'):
+                    data = {}
+                    for ch in item_el:
+                        data[ch.tag] = ch.text or ''
+                    items.append(data)
+                response_str = json.dumps(items)
             if self.stat_tool:
                 self.stat_tool.trace(ip=ip, feed_id=self.feed_config['id'], post_cnt=post_cnt, new_post_cnt=new_post_cnt)
         else:
@@ -282,10 +296,12 @@ class Site(resource.Resource):
         self.max_size = max_size
         self.downloadercls = downloadercls or Downloader
 
-    def startRequest(self, request, url, feed_config = None, selector_defer=None, sanitize=False):
+    def startRequest(self, request, url, feed_config = None, selector_defer=None,
+                     sanitize=False, response_format='xml'):
         downloader = self.downloadercls(self.feed, self.debug, self.snapshot_dir, self.stat_tool, self.memon,
                                         request=request, url=url, feed_config=feed_config,
-                                        selector_defer=selector_defer, sanitize=sanitize, max_size=self.max_size)
+                                        selector_defer=selector_defer, sanitize=sanitize,
+                                        max_size=self.max_size, response_format=response_format)
 
         sresponse = self.tryLocalPage(url)
         if sresponse:
@@ -334,12 +350,15 @@ class Site(resource.Resource):
         if b'url' in request.args: # page for frontend
             url = request.args[b'url'][0]
 
-            self.startRequest(request, url, sanitize=True)
+            self.startRequest(request, url, sanitize=True, response_format='xml')
             return NOT_DONE_YET
         elif self.feed_regexp.match(request.uri) is not None: # feed
 
             feed_id = self.feed_regexp.match(request.uri).groups()[0]
             sanitize = request.uri.endswith(b'?sanitize=Y')
+            if b'sanitize' in request.args:
+                sanitize = request.args[b'sanitize'][0] == b'Y'
+            format_ = request.args.get(b'format', [b'xml'])[0].decode('utf-8')
 
             time_left = self.limiter.check_request_time_limit(request.uri) if self.limiter else 0
             if time_left:
@@ -353,7 +372,8 @@ class Site(resource.Resource):
                     return res
 
                 url, feed_config = res
-                self.startRequest(request, url, feed_config, sanitize=sanitize)
+                self.startRequest(request, url, feed_config, sanitize=sanitize,
+                                 response_format=format_)
                 return NOT_DONE_YET
         else: # neither page and feed
             return 'Url is invalid'
