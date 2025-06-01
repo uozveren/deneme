@@ -101,6 +101,15 @@ popd
 Feed URLs accept an optional `format` query parameter. Use `?format=json` to
 get feed items serialized as JSON instead of the default RSS XML.
 
+## Running tests
+
+After installing dependencies from `requirements.txt`, run:
+
+```
+pytest
+```
+
+
 # Installation of Docker
 
 ## Build
