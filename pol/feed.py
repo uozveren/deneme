@@ -1,16 +1,13 @@
 import w3lib.url
 import w3lib.html
 
-from lxml import etree
-import re, sys
+import re
 from hashlib import md5
 
-from feedgenerator import Rss201rev2Feed, Enclosure
+from feedgenerator import Rss201rev2Feed
 import datetime
 
-import MySQLdb
 from contextlib import closing
-from settings import DATABASES, DOWNLOADER_USER_AGENT
 from twisted.logger import Logger
 
 from .db import get_conn

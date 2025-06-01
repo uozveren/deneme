@@ -15,7 +15,7 @@ from lxml import etree
 
 from twisted.web import server, resource
 from twisted.internet import reactor, endpoints, defer
-from twisted.web.client import Agent, BrowserLikeRedirectAgent, PartialDownloadError, HTTPConnectionPool
+from twisted.web.client import Agent, BrowserLikeRedirectAgent, PartialDownloadError
 from twisted.web.server import NOT_DONE_YET
 from twisted.web.http_headers import Headers
 from twisted.web.http import INTERNAL_SERVER_ERROR
@@ -30,7 +30,6 @@ from scrapy.http.request import Request
 from scrapy.http import Headers
 from scrapy.responsetypes import responsetypes
 from scrapy.core.downloader.contextfactory import ScrapyClientContextFactory
-from scrapy.selector import Selector
 
 from pol.log import LogHandler
 from .feed import Feed
