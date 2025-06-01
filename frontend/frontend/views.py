@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from .forms import IndexForm
 from .settings import DOWNLOADER_PAGE_URL, FEED_PAGE_URL
