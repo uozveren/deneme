@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'pipeline',
-    'frontend',
+    'frontend.apps.FrontendConfig',
 )
 
 MIDDLEWARE = (
@@ -175,3 +175,8 @@ DOWNLOADER_USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 
 # limit of seconds in which user can access separate feed
 FEED_REQUEST_PERIOD_LIMIT = 0
 SNAPSHOT_DIR = '/tmp'
+
+# API keys for payment/subscription providers
+PAYMENT_API_KEY = os.environ.get('PAYMENT_API_KEY', '')
+SUBSCRIPTION_API_KEY = os.environ.get('SUBSCRIPTION_API_KEY', '')
+DEFAULT_PLAN = os.environ.get('DEFAULT_PLAN', 'basic')
