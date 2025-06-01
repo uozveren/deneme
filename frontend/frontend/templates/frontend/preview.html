@@ -11,7 +11,7 @@
   <h1>{% trans 'subscribe.feed_ready' %}</h1>
 </div>
 <div class="media">
-  <a class="pull-left" href="{{ feed_url }}">
+  <a class="float-start" href="{{ feed_url }}">
 	<img src="{% static 'frontend/images/rss-640.png' %}" width="64" height="64" class="media-object" />
   </a>
 
@@ -24,7 +24,7 @@
     </h3>
   </div>
 
-  <div id="preview" class="well" style="margin-bottom: 60px">
+  <div id="preview" class="card card-body" style="margin-bottom: 60px">
     {% trans 'subscribe.loading' %}
   </div>
   <script type="text/javascript">

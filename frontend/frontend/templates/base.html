@@ -44,44 +44,39 @@
 <body>
 <div id="wrap">
 <div class="container">
-  <div class="navbar navbar-fluid-top">
-    <div class="navbar-inner">
-      <div class="container-fluid">
-        <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-        {% block logo %}
-            <a href="{% url 'index' %}" class="brand-pic"><img src="{% static 'frontend/images/apple-touch-icon-precomposed.png' %}" width="40" height="40" /></a>
-        {% endblock %}
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      {% block logo %}
+          <a href="{% url 'index' %}" class="navbar-brand brand-pic"><img src="{% static 'frontend/images/apple-touch-icon-precomposed.png' %}" width="40" height="40" /></a>
+      {% endblock %}
 
-        <div class="container-fluid nav-collapse">
-          <ul class="nav pull-right">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
             <li>{% if LANGUAGE_CODE == 'ru' %} <a href="/en/" class="lang"><span class="lang">English</span></a> {% else %} <span class="lang">English</span> {% endif %}
 
             <li>{% if LANGUAGE_CODE == 'en' %} <a href="/ru/" class="lang"><span class="lang">Русский</span></a> {% else %} <span class="lang">Русский</span> {% endif %}
-            <li class="divider-vertical"></li>
+            <li><div class="vr mx-2"></div></li>
             <li><a href="{% url 'contact' %}">{% trans "contact" %}</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'logout' %}">{% trans 'logout' %}</a></li>
             {% else %}
             <li><a href="{% url 'login' %}">{% trans 'login' %}</a></li>
             {% endif %}
-          </ul>
-        </div>
-        <!--/.nav-collapse -->
+        </ul>
       </div>
     </div>
-  </div>
+  </nav>
 </div>
 <div class="middler" style="{% if side_menu %} padding-bottom: 50px/*for footer*/ {% endif %}">
 <div class="container">
-  <div class="row-fluid">
+  <div class="row">
     {% if user.is_authenticated %}
       {% block side_menu %}{% endblock %}
     {% endif %}
-    <div class="{% if user.is_authenticated and side_menu %}span9{% else %}span12{% endif %}">
+    <div class="{% if user.is_authenticated and side_menu %}col-md-9{% else %}col-12{% endif %}">
       {% block content %}{% endblock %}
     </div>
   </div>
