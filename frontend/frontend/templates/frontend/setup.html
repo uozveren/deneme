@@ -55,19 +55,19 @@
 {% trans "xpath.link" as xpath_link %}
 <div id="loader-bg"><div id="loader"></div></div>
     <div id="restored-alert" class="alert fade in" style="display: none">
-        <button type="button" class="close" data-dismiss="alert">×</button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong>Restored saved version.</strong> Autosaved selectors are restored
     </div>
     <div id="st-clicker" style="float: left; margin-bottom: 20px">
         <h2 style="display: inline; line-height:inherit" id="setup-tool-string">
             {% trans 'setup.you_are_creating_feed_with' %} 
-            <button id="st-title" class="btn btn-large has-tooltip" title="{% trans 'setup.help' %}"
+            <button id="st-title" class="btn btn-lg has-tooltip" title="{% trans 'setup.help' %}"
                 data-trigger="hover focus manual" data-animation="true">{% trans 'setup.title' %}</button> {% trans 'setup.and' %} 
-            <button id="st-description" class="btn btn-large">{% trans 'setup.description' %}</button>.
+            <button id="st-description" class="btn btn-lg">{% trans 'setup.description' %}</button>.
         </h2>
     </div>
     <div id="st-extended" style="float:left; display:none">
-        <form class="form-horizontal">
+        <form class="form">
 						<div class="control-group info">
               <label class="control-label">
                   <a class="label label-info" href="{{ xpath_link }}" target="_blank">?</a>
@@ -118,8 +118,8 @@
            confirm-text="{% trans 'setup.confirm_loose' %}"><img src="{% static 'frontend/images/target48.png' %}" /></a>
         <a id="st-ext-trigger" href="javascript:void(0)"  style="display:none" class="has-tooltip" title="{% trans 'setup.extended_tip' %}"
             data-trigger="hover focus manual" data-animation="true"><img src="{% static 'frontend/images/wrench48.png' %}" /></a>
-        <button id="check" class="btn btn-large" style="display:none">{% trans 'setup.check' %} <i class="icon-check" style="margin-top: 3px"></i></button>
-        <button id="create" class="btn btn-large btn-primary disabled"  data-page-url="{{ page_url }}" data-feed-page-url="{{ feed_page_url }}">{% trans 'setup.create' %} <i class="icon-arrow-right icon-white" style="margin-top: 3px"></i></button>
+        <button id="check" class="btn btn-lg" style="display:none">{% trans 'setup.check' %} <i class="icon-check" style="margin-top: 3px"></i></button>
+        <button id="create" class="btn btn-lg btn-primary disabled"  data-page-url="{{ page_url }}" data-feed-page-url="{{ feed_page_url }}">{% trans 'setup.create' %} <i class="icon-arrow-right icon-white" style="margin-top: 3px"></i></button>
     </div>
 
 <style>
@@ -188,7 +188,7 @@ li.ext-result dl {
 }
 </style>
 <div id="ext-results" class="accordion accordion-body collapse" style="display:none; clear:both">
-  <button type="button" class="collapse-html-posts" data-toggle="collapse" data-target="#ext-results"><i class="icon-resize-small"></i><i class="icon-resize-full"></i></button>
+  <button type="button" class="collapse-html-posts" data-bs-toggle="collapse" data-bs-target="#ext-results"><i class="icon-resize-small"></i><i class="icon-resize-full"></i></button>
   <p class="no-data" style="display:none; text-align:center">{% trans 'setup.no_posts' %}</p>
   <ol>
     <li class="ext-result" style="display:none">

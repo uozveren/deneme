@@ -5,13 +5,13 @@
 {% block title %}{% trans "index_title" %}{% endblock %}
 
 {% block logo %}
-    <a href="{% url 'index' %}" class="brand">{% trans "brand" %}</a>
+    <a href="{% url 'index' %}" class="navbar-brand">{% trans "brand" %}</a>
 {% endblock %}
 
 {% block content %}
 <div class="welcom" style="position: relative">
     <div id="help" style="position: absolute; z-index: 2; right:0; top: 0; width: 60px;">
-    <a href="#helpModal" id="helpModalRef" data-toggle="modal">
+    <a href="#helpModal" id="helpModalRef" data-bs-toggle="modal">
     <span>{% trans 'help' %}</span>
     <img id="buoy" src="{% static 'frontend/images/buoy.png' %}" alt="{% trans 'help' %}" style="width: 60px; height: 60px" />
     </a>
@@ -25,10 +25,10 @@
         {{ form.url.errors }}
     </div>
     {% endif %}
-    <form method="get" class="form-horizontal">
-        <div class="control-group <%= 'error' if defined?(@error) %>">
-            <div class="input-append">
-                {{ form.url }} 
+    <form method="get" class="form">
+        <div class="mb-3 <%= 'error' if defined?(@error) %>">
+            <div class="input-group">
+                {{ form.url }}
                 <span class="normal">
                     <input type="submit" id="go-btn" value="{% trans 'go' %}" class="btn btn-primary btn-primary-reload" />
                 </span>
@@ -37,9 +37,9 @@
     </form>
 </div>
 <!-- Modal -->
-<div id="helpModal" class="modal hide fade" style="position:absolute" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+<div id="helpModal" class="modal fade" style="position:absolute" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     <h3 id="helpModalLabel">{% trans 'help' %}</h3>
   </div>
   <div class="modal-body">
@@ -49,7 +49,7 @@
       frameborder="0" allowfullscreen></iframe>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" data-bs-dismiss="modal" aria-hidden="true">Close</button>
   </div>
 </div>
 {% endblock %}
