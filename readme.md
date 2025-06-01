@@ -105,6 +105,20 @@ cd pol
 docker-compose up -d --build
 ```
 
+### Environment variables
+The application reads configuration from the following variables with defaults
+(shown in parentheses):
+
+* `DB_NAME` (`pol`)
+* `DB_USER` (`root`)
+* `DB_PASSWORD` (`toor`)
+* `DB_HOST` (`127.0.0.1`)
+* `DB_PORT` (`3306`)
+* `TIME_ZONE` (`UTC`)
+* `WEB_PORT` (`8000`)
+* `SECRET_KEY` (built-in demo key)
+* `DEBUG` (`True`)
+
 ## Access (port 8088)
 Docker Host IP in browser. Ex:
 http://192.168.0.10:8088

@@ -21,10 +21,11 @@ PROJECT_DIR = os.path.join(BASE_DIR, 'frontend')
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e2e%g-cu_f9=#^5=(8et$@(y+wu+dflyi2h)nim#r0-m=kqd^@'
+SECRET_KEY = os.environ.get('SECRET_KEY',
+    'e2e%g-cu_f9=#^5=(8et$@(y+wu+dflyi2h)nim#r0-m=kqd^@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('1', 'true', 'yes')
 
 ALLOWED_HOSTS = []
 
@@ -82,11 +83,11 @@ WSGI_APPLICATION = 'frontend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pol',
-        'USER': 'root',
-        'PASSWORD': 'toor',
-        'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'NAME': os.environ.get('DB_NAME', 'pol'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'toor'),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
 
@@ -101,7 +102,7 @@ LANGUAGES = (
     ('ru', 'Russian'),
 )
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 
 USE_I18N = True
 
