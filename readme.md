@@ -12,20 +12,20 @@ This is source code of RSS feed generator website with user friendly interface.
 
 Install required packages
 ```
-sudo apt-get install python-minimal libmysqlclient-dev libxml2-dev libxslt-dev python-dev libffi-dev gcc libssl-dev gettext
+sudo apt-get install python3-minimal libmysqlclient-dev libxml2-dev libxslt-dev python3-dev libffi-dev gcc libssl-dev gettext
 ```
 
 Install pip
 ```
 pushd /tmp
 wget https://bootstrap.pypa.io/get-pip.py
-sudo python get-pip.py
+sudo python3 get-pip.py
 popd
 ```
 
 Install pip packages
 ```
-sudo pip install -r pol/requirements.txt
+sudo pip3 install -r requirements.txt
 ```
 
 Install less and yuglify
@@ -75,8 +75,8 @@ cp pol/frontend/frontend/settings.py.example pol/frontend/frontend/settings.py
 Initialise database
 ```
 pushd pol/frontend
-python manage.py migrate
-python manage.py loaddata fields.json
+python3 manage.py migrate
+python3 manage.py loaddata fields.json
 popd
 ```
 
@@ -85,14 +85,14 @@ popd
 Run downloader server
 ```
 pushd pol
-python downloader.py
+python3 downloader.py
 popd
 ```
 
 Run frontend server
 ```
 pushd pol/frontend
-python manage.py runserver
+python3 manage.py runserver
 popd
 ```
 
