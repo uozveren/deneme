@@ -1,4 +1,3 @@
-from hashlib import md5
 
 from scrapy.selector import Selector
 

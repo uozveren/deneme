@@ -1,6 +1,6 @@
 import sys
 from pol.server import Server
-from settings import DATABASES, SNAPSHOT_DIR, DOWNLOADER_USER_AGENT, DEBUG
+from settings import DATABASES, SNAPSHOT_DIR, DOWNLOADER_USER_AGENT
 
 
 port = sys.argv[1] if len(sys.argv) >= 2 else 1234

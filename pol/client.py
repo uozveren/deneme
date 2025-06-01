@@ -1,19 +1,10 @@
 import warnings
 
-from twisted.python.failure import Failure
 from twisted.internet import defer, protocol, reactor
 from twisted.web._newclient import (
-    HTTP11ClientProtocol,
     PotentialDataLoss,
-    Request,
-    RequestGenerationFailed,
-    RequestNotSent,
-    RequestTransmissionFailed,
-    Response,
     ResponseDone,
     ResponseFailed,
-    ResponseNeverReceived,
-    _WrapperException,
     )
 from twisted.web.client import PartialDownloadError
 
