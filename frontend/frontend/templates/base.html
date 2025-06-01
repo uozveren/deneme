@@ -63,7 +63,11 @@
             <li>{% if LANGUAGE_CODE == 'en' %} <a href="/ru/" class="lang"><span class="lang">Русский</span></a> {% else %} <span class="lang">Русский</span> {% endif %}
             <li class="divider-vertical"></li>
             <li><a href="{% url 'contact' %}">{% trans "contact" %}</a></li>
-            <!--%= render 'devise/menu/login_items' %-->
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">{% trans 'logout' %}</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}">{% trans 'login' %}</a></li>
+            {% endif %}
           </ul>
         </div>
         <!--/.nav-collapse -->
@@ -74,10 +78,10 @@
 <div class="middler" style="{% if side_menu %} padding-bottom: 50px/*for footer*/ {% endif %}">
 <div class="container">
   <div class="row-fluid">
-    {% if user_signed_in %}
+    {% if user.is_authenticated %}
       {% block side_menu %}{% endblock %}
     {% endif %}
-    <div class="<%= (user_signed_in? && content_for?(:side_menu)) ? 'span9' : 'span12' %>">
+    <div class="{% if user.is_authenticated and side_menu %}span9{% else %}span12{% endif %}">
       {% block content %}{% endblock %}
     </div>
   </div>

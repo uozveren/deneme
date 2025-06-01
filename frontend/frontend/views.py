@@ -11,6 +11,8 @@ from django.urls import reverse
 
 from .forms import IndexForm
 from .settings import DOWNLOADER_PAGE_URL, FEED_PAGE_URL
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 from .setup_tool import get_selection_tag_ids, build_xpathes_for_items
 from .setup_tool_ext import build_xpath_results
@@ -98,11 +100,11 @@ _BASIC_TITLE_ID=1
 _BASIC_DESCRIPTION_ID=2
 _BASIC_LINK_ID=3
 
-def _create_feed(url, xpathes, edited=False):
+def _create_feed(url, xpathes, user=None, edited=False):
     feed_xpath = xpathes[0]
     item_xpathes = xpathes[1]
 
-    feed = Feed(uri=url, xpath=feed_xpath, edited=edited)
+    feed = Feed(uri=url, xpath=feed_xpath, user=user, edited=edited)
     feed.save()
 
     fields = Field.objects.all()
@@ -117,6 +119,7 @@ def _create_feed(url, xpathes, edited=False):
 
     return feed.id
 
+@login_required
 def setup_create_feed(request):
     if request.method == 'POST':
         obj = json.loads(request.body)
@@ -139,7 +142,7 @@ def setup_create_feed(request):
             field_xpathes[_BASIC_DESCRIPTION_ID] = [xpathes[1]['description'], required]
         xpathes[1] = field_xpathes
 
-        feed_id = _create_feed(url, xpathes)
+        feed_id = _create_feed(url, xpathes, request.user)
 
         return HttpResponse(reverse('preview', args=(feed_id,)))
 
@@ -189,6 +192,7 @@ def setup_validate_selectors(request):
 
         return HttpResponse(json.dumps({'success': success, 'messages': messages, 'posts': posts}))
 
+@login_required
 def setup_create_feed_ext(request):
     if request.method == 'POST':
         obj = json.loads(request.body)
@@ -210,7 +214,7 @@ def setup_create_feed_ext(request):
 
         if success:
             url = obj['url']
-            feed_id = _create_feed(url, validated_selectors, True)
+            feed_id = _create_feed(url, validated_selectors, request.user, True)
             return HttpResponse(json.dumps({'success': True, 'url': reverse('preview', args=(feed_id,))}))
         else:
             return HttpResponse(json.dumps({'success': False, 'messages': messages}))
@@ -223,3 +227,14 @@ def preview(request, feed_id):
                         })
 
     return HttpResponseBadRequest('Only GET method supported')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('login'))
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})

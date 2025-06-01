@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
+from django.urls import path
 
 from . import views
 
@@ -26,6 +27,11 @@ urlpatterns = i18n_patterns(
     url(r'^contact$', views.contact, name='contact'),
     url(r'^admin/', include(admin.site.urls)),
 )
+
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', views.register, name='register'),
+]
 
 urlpatterns.append(url(r'^setup_get_selected_ids$', views.setup_get_selected_ids, name='setup_get_selected_ids'))
 urlpatterns.append(url(r'^setup_create_feed$', views.setup_create_feed, name='setup_create_feed'))
