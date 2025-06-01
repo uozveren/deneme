@@ -4,7 +4,7 @@ import re
 
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.urls import reverse
@@ -238,3 +238,17 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+@login_required
+def dashboard(request):
+    feeds = Feed.objects.filter(user=request.user).order_by('-created')
+    return render(request, 'frontend/dashboard.html', {'feeds': feeds})
+
+
+@login_required
+def delete_feed(request, feed_id):
+    if request.method == 'POST':
+        feed = get_object_or_404(Feed, id=feed_id, user=request.user)
+        feed.delete()
+    return HttpResponseRedirect(reverse('dashboard'))

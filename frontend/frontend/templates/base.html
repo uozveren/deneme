@@ -61,6 +61,7 @@
             <li><div class="vr mx-2"></div></li>
             <li><a href="{% url 'contact' %}">{% trans "contact" %}</a></li>
             {% if user.is_authenticated %}
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
             <li><a href="{% url 'logout' %}">{% trans 'logout' %}</a></li>
             {% else %}
             <li><a href="{% url 'login' %}">{% trans 'login' %}</a></li>
