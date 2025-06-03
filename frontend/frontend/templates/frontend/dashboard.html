@@ -8,6 +8,12 @@
 <p>
   <a href="{% url 'manage_subscription' %}" class="btn btn-secondary">{% trans 'Subscription' %}</a>
 </p>
+<form method="get" class="mb-3">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" placeholder="{% trans 'Search' %}" value="{{ request.GET.q }}">
+    <button type="submit" class="btn btn-primary">{% trans 'Search' %}</button>
+  </div>
+</form>
 <table class="table">
   <thead>
     <tr>
