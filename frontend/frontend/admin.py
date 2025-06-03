@@ -2,6 +2,9 @@ from django.contrib import admin
 
 from .models import Feed, Field, FeedField, Post, Subscription
 
+# Register basic models without custom admin classes
+admin.site.register([Feed, Field, FeedField, Post])
+
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
