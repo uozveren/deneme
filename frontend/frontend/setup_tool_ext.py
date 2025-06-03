@@ -10,7 +10,7 @@ def build_xpath_results(selectors, file_name):
 
     fpath = "%s/%s" % (SNAPSHOT_DIR, file_name)
 
-    with open(fpath) as f:
+    with open(fpath, 'rb') as f:
         data = f.read()
 
     html = data.decode('utf-8').split('\n\n', 1)[1]
@@ -48,7 +48,7 @@ def build_xpath_results(selectors, file_name):
                                 extracted_post[field_id] = ''.join(extracts)
                     except ValueError as ex:
                         success = False
-                        field_results[field_id]['error'] = ex.message
+                        field_results[field_id]['error'] = str(ex)
 
                 if selected_required:
                     for field_id, xpath_required in field_xpathes.items():
@@ -75,12 +75,12 @@ def build_xpath_results(selectors, file_name):
                     except ValueError as ex:
                         if not (field_id in field_results):
                             field_results[field_id] = {}
-                        field_results[field_id]['error'] = ex.message
+                        field_results[field_id]['error'] = str(ex)
                         success = False
 
 
     except ValueError as ex:
-        feed_result = {'error': ex.message}
+        feed_result = {'error': str(ex)}
         success = False
 
     return [[feed_result, field_results], extracted_posts, success]
