@@ -8,14 +8,28 @@ class Feed(models.Model):
     edited = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        """Return a human readable representation of the feed."""
+        return self.uri
+
 class Field(models.Model):
     name = models.CharField(max_length=200)
     required = models.BooleanField(default=True)
+
+    def __str__(self):
+        """Return the name of the field."""
+        return self.name
 
 class FeedField(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
     field = models.ForeignKey(Field, on_delete=models.CASCADE)
     xpath = models.CharField(max_length=2000)
+
+    def __str__(self):
+        """Describe which field belongs to which feed."""
+        feed_str = getattr(self.feed, 'uri', str(self.feed))
+        field_str = getattr(self.field, 'name', str(self.field))
+        return f"{feed_str} - {field_str}"
 
 class Post(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
@@ -24,6 +38,11 @@ class Post(models.Model):
 
     class Meta:
         index_together = ['feed', 'md5sum']
+
+    def __str__(self):
+        """Return a representation including feed and checksum."""
+        feed_str = getattr(self.feed, 'uri', str(self.feed))
+        return f"{feed_str} - {self.md5sum}"
 
 
 class Subscription(models.Model):
