@@ -1,7 +1,8 @@
 (function(){
 
-// skip non setup page
-if (!document.location.href.match('https?://[^/]+/[^/]+/setup\?.+'))
+// skip non setup/edit page
+if (!document.location.href.match('https?://[^/]+/[^/]+/setup\?.+') &&
+    !document.location.href.match('https?://[^/]+/[^/]+/dashboard/edit/\\d+/'))
     return;
 
 function save(key, obj) {

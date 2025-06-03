@@ -23,7 +23,7 @@
       <td>{{ feed.created|date:"Y-m-d H:i" }}</td>
       <td>
         <a class="btn btn-sm btn-primary" href="{% url 'preview' feed.id %}">{% trans 'View' %}</a>
-        <a class="btn btn-sm btn-secondary" href="{% url 'setup' %}?url={{ feed.uri|urlencode }}">{% trans 'Edit' %}</a>
+        <a class="btn btn-sm btn-secondary" href="{% url 'edit_feed' feed.id %}">{% trans 'Edit' %}</a>
         <form method="post" action="{% url 'delete_feed' feed.id %}" style="display:inline;">
           {% csrf_token %}
           <button type="submit" class="btn btn-sm btn-danger">{% trans 'Delete' %}</button>

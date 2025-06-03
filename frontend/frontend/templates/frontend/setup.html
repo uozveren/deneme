@@ -257,5 +257,13 @@ li.ext-result dl {
             iframe_element = this;
             update_iframe_heignt();
         });
+
+        {% if feed_config_json %}
+        $(function(){
+            if (window.ET && typeof ET.updateUI === 'function') {
+                ET.updateUI({{ feed_config_json|safe }});
+            }
+        });
+        {% endif %}
     </script>
 {% endblock %}

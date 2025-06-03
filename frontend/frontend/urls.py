@@ -34,6 +34,7 @@ urlpatterns += [
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),
     path('dashboard/delete/<int:feed_id>/', views.delete_feed, name='delete_feed'),
+    path('dashboard/edit/<int:feed_id>/', views.edit_feed, name='edit_feed'),
 ]
 
 urlpatterns.append(url(r'^setup_get_selected_ids$', views.setup_get_selected_ids, name='setup_get_selected_ids'))

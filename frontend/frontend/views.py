@@ -255,6 +255,24 @@ def delete_feed(request, feed_id):
 
 
 @login_required
+def edit_feed(request, feed_id):
+    feed = get_object_or_404(Feed, id=feed_id, user=request.user)
+    feed_fields = FeedField.objects.filter(feed=feed).select_related('field')
+
+    config = [feed.xpath, {}]
+    for ff in feed_fields:
+        config[1][ff.field.name] = ff.xpath
+
+    external_page_url = DOWNLOADER_PAGE_URL + urllib.parse.quote(feed.uri, safe='')
+
+    return render(request, 'frontend/setup.html', {
+        'external_page_url': external_page_url,
+        'page_url': feed.uri,
+        'feed_config_json': json.dumps(config),
+    })
+
+
+@login_required
 def manage_subscription(request):
     subscription = get_object_or_404(Subscription, user=request.user)
     return render(request, 'frontend/subscription.html', {
