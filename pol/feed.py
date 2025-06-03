@@ -42,7 +42,9 @@ class Feed(object):
         new_post_cnt = 0
         for item in items:
             #create md5
-            h = md5('')
+            # Initialize the md5 hasher with no data instead of passing an
+            # empty string which is deprecated in newer Python versions.
+            h = md5()
             for key in ['title', 'description', 'link']:
                 if key in item:
                     h.update(item[key].encode('utf-8'))
