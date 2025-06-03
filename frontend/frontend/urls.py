@@ -26,6 +26,7 @@ urlpatterns = i18n_patterns(
     url(r'^preview/([0-9]+)$', views.preview, name='preview'),
     url(r'^contact$', views.contact, name='contact'),
     url(r'^dashboard$', views.dashboard, name='dashboard'),
+    url(r'^subscription$', views.manage_subscription, name='manage_subscription'),
     url(r'^admin/', include(admin.site.urls)),
 )
 
