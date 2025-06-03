@@ -307,7 +307,7 @@ class Site(resource.Resource):
             if selector_defer:
                 reactor.callLater(0, selector_defer.callback, sresponse)
             else:
-                downloader.writeResponse(request, sresponse, feed_config)
+                downloader.writeResponse(sresponse)
         else:
             agent = BrowserLikeRedirectAgent(
                 Agent(reactor,
@@ -333,7 +333,7 @@ class Site(resource.Resource):
 
     def tryLocalPage(self, url):
         if self.prefetch_dir:
-            m = md5(url).hexdigest()
+            m = md5(url.encode('utf-8')).hexdigest()
             domain = urlparse(url).netloc
             try:
                 with open(self.prefetch_dir + '/' + m + '.' + domain) as f:
