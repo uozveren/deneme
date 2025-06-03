@@ -1,0 +1,27 @@
+// Dark theme variables
+$dark-bg: #121212;
+$dark-text: #f8f9fa;
+$dark-navbar-bg: #343a40;
+$dark-link: #0d6efd;
+
+body.dark-mode {
+  background-color: $dark-bg;
+  color: $dark-text;
+}
+
+body.dark-mode a {
+  color: $dark-link;
+}
+
+body.dark-mode .navbar {
+  background-color: $dark-navbar-bg !important;
+}
+
+body.dark-mode .navbar .nav-link {
+  color: $dark-text !important;
+}
+
+body.dark-mode #footer {
+  background-color: $dark-navbar-bg;
+  color: $dark-text;
+}
