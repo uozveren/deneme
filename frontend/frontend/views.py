@@ -16,7 +16,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .setup_tool import get_selection_tag_ids, build_xpathes_for_items
 from .setup_tool_ext import build_xpath_results
-from .models import Feed, Field, FeedField
+from .models import Feed, Field, FeedField, Subscription
 
 def index(request):
     if request.method == 'GET' and 'url' in request.GET:
@@ -252,3 +252,11 @@ def delete_feed(request, feed_id):
         feed = get_object_or_404(Feed, id=feed_id, user=request.user)
         feed.delete()
     return HttpResponseRedirect(reverse('dashboard'))
+
+
+@login_required
+def manage_subscription(request):
+    subscription = get_object_or_404(Subscription, user=request.user)
+    return render(request, 'frontend/subscription.html', {
+        'subscription': subscription,
+    })
