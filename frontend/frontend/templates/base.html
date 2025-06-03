@@ -59,6 +59,7 @@
 
             <li>{% if LANGUAGE_CODE == 'en' %} <a href="/ru/" class="lang"><span class="lang">Русский</span></a> {% else %} <span class="lang">Русский</span> {% endif %}
             <li><div class="vr mx-2"></div></li>
+            <li><button id="theme-toggle" class="btn btn-link nav-link p-0">Dark Mode</button></li>
             <li><a href="{% url 'contact' %}">{% trans "contact" %}</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
@@ -88,10 +89,27 @@
   <div class="push"></div>
 </div>
 </div>
-<div id="footer">
-  <div class="container">
-    <p class="credit">{% trans 'made_by' %} <a href="https://github.com/taroved" target="_blank">{% trans 'made_name' %}</a></p>
+  <div id="footer">
+    <div class="container">
+      <p class="credit">{% trans 'made_by' %} <a href="https://github.com/taroved" target="_blank">{% trans 'made_name' %}</a></p>
+    </div>
   </div>
-</div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('theme-toggle');
+      function applyTheme(isDark) {
+        document.body.classList.toggle('dark-mode', isDark);
+      }
+      var isDark = localStorage.getItem('theme') === 'dark';
+      applyTheme(isDark);
+      if (btn) {
+        btn.addEventListener('click', function() {
+          isDark = !document.body.classList.contains('dark-mode');
+          applyTheme(isDark);
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+      }
+    });
+  </script>
 </body>
 </html>

@@ -140,6 +140,7 @@ PIPELINE_CSS = {
           'frontend/stylesheets/application.css',
           'frontend/stylesheets/bootstrap5_and_overrides.scss',
           'frontend/stylesheets/wizard.css.scss',
+          'frontend/stylesheets/dark-theme.scss',
           'frontend/stylesheets/google-code-prettify/prettify.css',
         ),
         'output_filename': 'frontend/stylesheets/app.css',
