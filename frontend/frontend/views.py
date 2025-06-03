@@ -242,7 +242,11 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    feeds = Feed.objects.filter(user=request.user).order_by('-created')
+    feeds = Feed.objects.filter(user=request.user)
+    query = request.GET.get('q')
+    if query:
+        feeds = feeds.filter(uri__icontains=query)
+    feeds = feeds.order_by('-created')
     return render(request, 'frontend/dashboard.html', {'feeds': feeds})
 
 
