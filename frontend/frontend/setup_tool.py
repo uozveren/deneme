@@ -4,8 +4,8 @@ I_ATTRS = 1
 I_CHILDREN = 2
 I_PARENT = 3 # not in use
 
-def build_xpathes(item_tag_ids, html_json):
-    shared_tag_stack = [];
+# `build_xpathes` and `_path_stack_to_xpath` were unused placeholders.
+# They have been removed to avoid confusion.
 
 def _get_fork_stack(stacks):
     first = next(iter(stacks.values())) # just first stack
@@ -132,9 +132,6 @@ def get_selection_tag_ids(item_tag_ids, html_json):
                 selection_ids[name].append(ids[name])
 
     return selection_ids
-
-def _path_stack_to_xpath(stack):
-    stack
 
 def build_xpathes_for_items(item_tag_ids, html_json):
     parent_stacks = {}
