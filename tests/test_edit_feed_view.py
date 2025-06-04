@@ -1,4 +1,3 @@
-import os
 import pytest
 
 django = pytest.importorskip('django')
