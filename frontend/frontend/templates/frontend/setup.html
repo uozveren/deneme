@@ -4,20 +4,20 @@
 
 {% block content %}
 <style>
-#st-extended .control-group {
+#st-extended .mb-3 {
     margin-bottom: 0;
-} 
-#st-extended .form-horizontal .control-label {
-	padding-right: 10px;
-	width: 110px
+}
+#st-extended .form-label {
+        padding-right: 10px;
+        width: 110px
 }
 
 #st-extended .form-horizontal .controls {
     margin-left: 110px;
 }
 
-#st-extended  .control-group > .controls > select {
-		width: 100px;
+#st-extended  .mb-3 > .controls > select {
+                width: 100px;
 }
 
 /* Large desktop */
@@ -29,17 +29,11 @@
 #st-extended .form-horizontal .controls {
     width: 410px
 }
-#st-extended .form-horizontal .controls .input-xxlarge {
-    width: 270px
-}
 }
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
 #st-extended .form-horizontal .controls {
     width: 340px
-}
-#st-extended .form-horizontal .controls .input-xxlarge {
-    width: 200px
 }
 }
 /* Landscape phones and down */
@@ -47,14 +41,11 @@
 #st-extended .form-horizontal .controls {
     width: 340px
 }
-#st-extended .form-horizontal .controls .input-xxlarge {
-    width: 200px
-}
 }
 </style>
 {% trans "xpath.link" as xpath_link %}
 <div id="loader-bg"><div id="loader"></div></div>
-    <div id="restored-alert" class="alert fade in" style="display: none">
+    <div id="restored-alert" class="alert alert-info fade" style="display: none">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong>Restored saved version.</strong> Autosaved selectors are restored
     </div>
@@ -67,48 +58,48 @@
         </h2>
     </div>
     <div id="st-extended" style="float:left; display:none">
-        <form class="form">
-						<div class="control-group info">
-              <label class="control-label">
+        <form>
+                                                <div class="mb-3 info">
+              <label class="form-label">
                   <a class="label label-info" href="{{ xpath_link }}" target="_blank">?</a>
                   {% trans 'setup.item_xpath' %}:</label>
-								<div class="controls">
-										<input type="text" id="ste-parent" class="input-xxlarge" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
-                                        <span class="help-inline" count-tpl="{% trans 'setup.Selected' %}"></span>
-								</div>
-						</div>
-						<div class="control-group info">
-								<label class="control-label">{% trans 'setup.title_xpath' %}:</label>
-								<div class="controls">
+                                                                  <div class="controls">
+                                                                       <input type="text" id="ste-parent" class="form-control" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
+                                        <span class="form-text" count-tpl="{% trans 'setup.Selected' %}"></span>
+                                                                  </div>
+                                                </div>
+                                                <div class="mb-3 info">
+                                                                  <label class="form-label">{% trans 'setup.title_xpath' %}:</label>
+                                                                  <div class="controls">
 										<select id="ste-title-required" disabled>
 												<option selected="selected" value="1">{% trans 'setup.Required' %}</option>
 												<option value="0">{% trans 'setup.Optional' %}</option>
 										<select>
-										<input type="text" id="ste-title" class="input-xxlarge" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
-										<span class="help-inline" count-tpl="{% trans 'setup.Selected' %}"></span>
-								</div>
-						</div>
-						<div class="control-group info">
-              <label class="control-label">{% trans 'setup.link_xpath' %}:</label>
-								<div class="controls">
+                                                                       <input type="text" id="ste-title" class="form-control" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
+                                                                       <span class="form-text" count-tpl="{% trans 'setup.Selected' %}"></span>
+                                                                  </div>
+                                                </div>
+                                                <div class="mb-3 info">
+                <label class="form-label">{% trans 'setup.link_xpath' %}:</label>
+                                                                  <div class="controls">
 										<select id="ste-link-required" style="width:100px" disabled>
 												<option value="1">{% trans 'setup.Required' %}</option>
 												<option selected="selected" value="0">{% trans 'setup.Optional' %}</option>
 										<select>
-										<input type="text" id="ste-link" class="input-xxlarge" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
-										<span class="help-inline" count-tpl="{% trans 'setup.Selected' %}"></span>
-								</div>
-						</div>
-						<div class="control-group info">
-              <label class="control-label">{% trans 'setup.description_xpath' %}:</label>
-								<div class="controls">
+                                                                       <input type="text" id="ste-link" class="form-control" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
+                                                                       <span class="form-text" count-tpl="{% trans 'setup.Selected' %}"></span>
+                                                                  </div>
+                                                </div>
+                                                <div class="mb-3 info">
+                <label class="form-label">{% trans 'setup.description_xpath' %}:</label>
+                                                                  <div class="controls">
 										<select id="ste-description-required" style="width:100px" disabled>
 												<option selected="selected" value="1">{% trans 'setup.Required' %}</option>
 												<option value="0">{% trans 'setup.Optional' %}</option>
 										<select>
-										<input type="text" id="ste-description" class="input-xxlarge" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
-										<span class="help-inline" count-tpl="{% trans 'setup.Selected' %}"></span>
-								</div>
+                                                                       <input type="text" id="ste-description" class="form-control" placeholder="{% trans 'setup.skipped' %}" autocomplete="off"/>
+                                                                       <span class="form-text" count-tpl="{% trans 'setup.Selected' %}"></span>
+                                                                  </div>
 						</div>
         </form>
     </div>
@@ -180,11 +171,11 @@ li.ext-result dl {
 #ext-results .collapse-html-posts i.icon-resize-full {
 		display: inline-block;
 }
-#ext-results.in .collapse-html-posts i.icon-resize-small {
-		display: inline-block;
+#ext-results.show .collapse-html-posts i.icon-resize-small {
+                display: inline-block;
 }
-#ext-results.in .collapse-html-posts i.icon-resize-full {
-		display: none;
+#ext-results.show .collapse-html-posts i.icon-resize-full {
+                display: none;
 }
 </style>
 <div id="ext-results" class="accordion accordion-body collapse" style="display:none; clear:both">
@@ -210,7 +201,7 @@ li.ext-result dl {
 
     <script type="text/javascript">
         $('button.collapse-html-posts').on('click', function(){
-           if ($('#ext-results.in').length == 1) { // Posts list is expanded, is collapsing
+           if ($('#ext-results.show').length == 1) { // Posts list is expanded, is collapsing
 							setTimeout(update_iframe_heignt, 500);
            }
         });

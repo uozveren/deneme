@@ -138,7 +138,7 @@ PIPELINE_CSS = {
     'app': {
         'source_filenames': (
           'frontend/stylesheets/application.css',
-          'frontend/stylesheets/bootstrap_and_overrides.css.less',
+          'frontend/stylesheets/bootstrap5_and_overrides.scss',
           'frontend/stylesheets/wizard.css.scss',
           'frontend/stylesheets/google-code-prettify/prettify.css',
         ),
@@ -155,7 +155,7 @@ PIPELINE_JS = {
           'frontend/js/jquery.js',
           'frontend/js/jquery.browser.js',
           'frontend/js/jquery.jfeed.js',
-          'frontend/js/bootstrap.js',
+          'frontend/js/bootstrap5/bootstrap.js',
           'frontend/js/bootstrap_and_overrides.js',
           'frontend/js/xregexp-all.js',
           'frontend/js/google-code-prettify/prettify.js',

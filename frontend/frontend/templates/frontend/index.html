@@ -21,11 +21,11 @@
 
     <p>{% trans "hello" %}</p>
     {% if form.url.errors %}
-    <div class="alert alert-error">
+    <div class="alert alert-danger">
         {{ form.url.errors }}
     </div>
     {% endif %}
-    <form method="get" class="form">
+    <form method="get">
         <div class="mb-3 <%= 'error' if defined?(@error) %>">
             <div class="input-group">
                 {{ form.url }}
