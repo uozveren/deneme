@@ -27,6 +27,7 @@ urlpatterns = i18n_patterns(
     url(r'^contact$', views.contact, name='contact'),
     url(r'^dashboard$', views.dashboard, name='dashboard'),
     url(r'^subscription$', views.manage_subscription, name='manage_subscription'),
+    path('subscription/update/', views.update_subscription, name='update_subscription'),
     url(r'^admin/', include(admin.site.urls)),
 )
 

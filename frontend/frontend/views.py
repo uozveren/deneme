@@ -5,6 +5,7 @@ import re
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.urls import reverse
@@ -282,3 +283,23 @@ def manage_subscription(request):
     return render(request, 'frontend/subscription.html', {
         'subscription': subscription,
     })
+
+
+@login_required
+def update_subscription(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest('Only POST method supported')
+
+    subscription = get_object_or_404(Subscription, user=request.user)
+
+    if 'cancel' in request.POST:
+        subscription.status = 'canceled'
+        subscription.end_date = timezone.now().date()
+        subscription.save()
+    elif 'plan' in request.POST:
+        subscription.plan = request.POST['plan']
+        subscription.status = 'active'
+        subscription.end_date = None
+        subscription.save()
+
+    return HttpResponseRedirect(reverse('manage_subscription'))
