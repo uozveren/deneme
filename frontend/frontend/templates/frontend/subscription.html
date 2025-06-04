@@ -23,4 +23,22 @@
     <td>{{ subscription.end_date|default:'-' }}</td>
   </tr>
 </table>
+
+<form method="post" action="{% url 'update_subscription' %}" class="mb-3">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="plan" class="form-label">{% trans "Plan" %}</label>
+    <select name="plan" id="plan" class="form-select">
+      <option value="basic" {% if subscription.plan == 'basic' %}selected{% endif %}>Basic</option>
+      <option value="premium" {% if subscription.plan == 'premium' %}selected{% endif %}>Premium</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+</form>
+
+<form method="post" action="{% url 'update_subscription' %}">
+  {% csrf_token %}
+  <input type="hidden" name="cancel" value="1">
+  <button type="submit" class="btn btn-danger">{% trans "Cancel subscription" %}</button>
+</form>
 {% endblock %}
