@@ -14,7 +14,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-GC_PERIOD_SECONDS = 1#3 * 60 * 60 # 3 hours
+GC_PERIOD_SECONDS = 3 * 60 * 60  # 3 hours
 
 def is_hist_obj(tpe, _str_or_o):
     for t in pgc.id_types:
@@ -104,7 +104,7 @@ def pgc(none): # periodical_garbage_collect
         go, allo = get_gc_stats()
         log.info("GC: GARBAGE OBJECTS STATS (%s)" % len(go))
         for tpe, stats in sorted(iter(go.items()), key=lambda t: t[0]):
-            log.info("GC: %s: %s, %s" % (tpe, stats.count. stats.size))
+            log.info("GC: %s: %s, %s" % (tpe, stats.count, stats.size))
 
         log.info("GC: ALL OBJECTS STATS (%s)" % len(allo))
 
