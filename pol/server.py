@@ -353,7 +353,7 @@ class Site(resource.Resource):
             return NOT_DONE_YET
         elif self.feed_regexp.match(request.uri) is not None: # feed
 
-            feed_id = self.feed_regexp.match(request.uri).groups()[0]
+            feed_id = int(self.feed_regexp.match(request.uri).group(1))
             sanitize = request.uri.endswith(b'?sanitize=Y')
             if b'sanitize' in request.args:
                 sanitize = request.args[b'sanitize'][0] == b'Y'
